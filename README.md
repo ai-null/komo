@@ -1,2 +1,3 @@
 # video-player
-video player app use with electron and react
+
+desktop app video player using electron and react
