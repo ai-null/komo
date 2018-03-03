@@ -2,9 +2,12 @@
   "name": "video-player",
   "version": "1.0.0",
   "description": "video player based on electron js",
-  "main": "index.js",
+  "main": "electron.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build": "webpack -wd",
+    "web": "nodemon --exec babel-node index.js"
   },
   "repository": {
     "type": "git",
