@@ -1,12 +1,12 @@
-var {join} = require('path')
+const {join} = require('path')
 
 module.exports = {
-    entry: join(__dirname, 'assets/js', 'index.js'),
+    entry: join(__dirname, 'components', 'index.container.js'),
     output: {
-        path: join(__dirname, 'assets/js'),
+        path: join(__dirname, 'assets', 'js'),
         filename: 'bundle.js'
     },
-    modules: {
+    module: {
         loaders: [{
             test: /\.js$/,
             loader: 'babel-loader'
