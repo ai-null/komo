@@ -1,0 +1,84 @@
+Arguments: 
+  /home/ainul/.nvm/versions/node/v8.9.4/bin/node /usr/local/bin/yarn run dev
+
+PATH: 
+  /home/ainul/.nvm/versions/node/v8.9.4/bin:/home/ainul/bin:/home/ainul/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-9-oracle/bin:/usr/lib/jvm/java-9-oracle/db/bin:/usr/lib/jvm/java-9-oracle/bin:/usr/lib/jvm/java-9-oracle/db/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.9.4
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  {
+    "name": "video-player",
+    "version": "1.0.0",
+    "description": "video player based on electron js",
+    "main": "electron.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "concurrently \"webpack -wd\" \"electron .\"",
+      "web": "nodemon --exec babel-node index.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/MAinulYaqin/video-player.git"
+    },
+    "keywords": [
+      "video",
+      "player"
+    ],
+    "author": "AinulBedjo",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/MAinulYaqin/video-player/issues"
+    },
+    "homepage": "https://github.com/MAinulYaqin/video-player#readme",
+    "devDependencies": {
+      "electron": "^1.8.2",
+      "electron-winstaller": "^2.6.4",
+      "nodemon": "*",
+      "concurrently": "*"
+    },
+    "dependencies": {
+      "axios": "^0.18.0",
+      "babel-cli": "^6.26.0",
+      "babel-core": "^6.26.0",
+      "babel-loader": "^7.1.2",
+      "babel-preset-es2015": "^6.24.1",
+      "babel-preset-react": "^6.24.1",
+      "babel-preset-stage-2": "^6.24.1",
+      "body-parser": "^1.18.2",
+      "express": "^4.16.2",
+      "react": "^16.2.0",
+      "react-dom": "^16.2.0",
+      "react-redux": "^5.0.7",
+      "redux": "^3.7.2",
+      "redux-thunk": "^2.2.0",
+      "webpack": "^3.11.0",
+      "webpack-dev-server": "^2.11.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Command "dev" not found.
+      at new MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:87307:17
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:116:14
+      at new Promise (<anonymous>)
+      at new F (/usr/local/lib/node_modules/yarn/lib/cli.js:23451:28)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:95:12
+      at runCommand (/usr/local/lib/node_modules/yarn/lib/cli.js:87312:22)
+      at Object.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:87412:14)

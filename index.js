@@ -1,17 +1,13 @@
 var express = require('express')
-var {join} = require('path')
-var {port} = require('./assets/config')
-
 var app = express()
+var path = require('path')
 
-app.set('views', join(__dirname, 'views'))
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname, 'views', 'index.html')
+app.get('/', function (req, res) {
+	res.sendFile(path.join(__dirname, 'views', 'index.html'))
 })
 
-app.listen(port, (err) => {
-    if (err) throw new Error
-    
-    console.log(`Magic happen at port ${port}`)
+app.listen(3000, function () {
+	console.log(`Magic happen at port 3000`)
 })

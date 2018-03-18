@@ -4,9 +4,9 @@
   "description": "video player based on electron js",
   "main": "electron.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"webpack -wd\" \"electron .\"",
     "build": "webpack -wd",
+    "launch": "electron .",
+    "start": "concurrently \"webpack -wd\" \"electron .\"",
     "web": "nodemon --exec babel-node index.js"
   },
   "repository": {
@@ -25,7 +25,9 @@
   "homepage": "https://github.com/MAinulYaqin/video-player#readme",
   "devDependencies": {
     "electron": "^1.8.2",
-    "electron-winstaller": "^2.6.4"
+    "electron-winstaller": "^2.6.4",
+    "nodemon": "*",
+    "concurrently": "*"
   },
   "dependencies": {
     "axios": "^0.18.0",
