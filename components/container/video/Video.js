@@ -1,9 +1,9 @@
 import React from 'react'
 
-const video = ({sauce}) => {
+const Video = ({sauce, id}) => {
     return (
-        <video src={sauce}></video>
+        <video src={sauce} id={id}></video>
     )
 }
 
-export default video
+export default Video

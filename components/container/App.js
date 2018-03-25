@@ -1,26 +1,31 @@
 import React from 'react'
 import Video from './video/Video'
+import VideoControl from './video/Video.control'
 
 export default class App extends React.Component {
-    constructor (props) {
-        super(props)
+    constructor (...argument) {
+        super(...argument)
         this.state = {
-            data: 'Hello World'
+            inputID: 'inputDOM',
+            video: 'video-player'
         }
     }
     
-    getFilePath (e) {
-        let filePath = document.getElementById(e).files[0].path
-        
-        this.setState({filePath})
+    getFilePath () {
+        let filePath = document.getElementById(this.state.inputID).files[0].path
+        this.setState({ filePath })
+    }
+
+    playBtn () {
+        let videoDOM = document.getElementById(this.state.video)
+        console.log(videoDOM)
     }
 
     render () {
         return (
             <div>
-                <input type="file" id="inputDOM" accept="*.pdf" onChange={() => { this.getFilePath('inputDOM') }} />
-
-                <Video sauce={this.state.filePath === '' ? 'lol' : this.state.filePath} />
+                <Video id={this.state.video} sauce={this.state.filePath === '' ? '' : this.state.filePath} />
+                <VideoControl playBtn={this.playBtn} />
             </div>
         )
     }

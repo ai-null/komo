@@ -8,7 +8,12 @@ var config = require('./assets/config')
 
 var win
 function showWindow (e) {
-    win = new BrowserWindow()
+    win = new BrowserWindow({
+        width: 1080,
+        height: 600,
+        minWidth: 400,
+        minHeight: 200
+    })
 
     win.loadURL(url.format({
         pathname: join(__dirname, e),
