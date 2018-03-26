@@ -1,4 +1,5 @@
 import React from 'react'
+import Title from './title/Title'
 import Video from './video/Video'
 import VideoControl from './video/Video.control'
 
@@ -24,6 +25,7 @@ export default class App extends React.Component {
     render () {
         return (
             <div>
+                <Title />
                 <Video id={this.state.video} sauce={this.state.filePath === '' ? '' : this.state.filePath} />
                 <VideoControl playBtn={this.playBtn} />
             </div>

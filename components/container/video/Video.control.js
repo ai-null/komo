@@ -21,6 +21,9 @@ const VideoControl = ({playBtn}) => {
                     <li className="btn fast-forward">
                         <i className="fa fa-fast-forward"></i>
                     </li>
+                    <li className="btn stop">
+                        <i className="fa fa-stop"></i>
+                    </li>
                     <li className="btn volume">
                         <ul>
                             <li><i className="fa fa-volume-up"></i></li>

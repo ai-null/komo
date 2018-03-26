@@ -1,6 +1,7 @@
 /* * { outline: 1px solid red } */
 
 body, ul {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -23,10 +24,30 @@ li {
     position: fixed;
 }
 
+/* Title */
+
+.title {
+    background: transparent;
+    position: fixed;
+    padding: 1em 2rem;
+    z-index: 1;
+}
+
+.title > span:nth-child(1) {
+    font-size: 150%;
+}
+
+.title > span:nth-child(3) {
+    color: #212121
+}
+
+/* Title :: END */
+
 /*  Video Controls  */
 
 #video-control {
     background: transparent;
+    box-shadow: #000000c5 2px 2px;
     position: fixed;
     margin-bottom: 0;
     bottom: 0;
