@@ -10,13 +10,13 @@ li {
     list-style-type: none;
 }
 
-/* ::selection {
+::selection {
     background-color: transparent
 }
 
 -webkit-::selection {
     background-color: transparent
-} */
+}
 
 #video-player {
     width: 100%;
@@ -27,18 +27,21 @@ li {
 /* Title */
 
 .title {
-    background: transparent;
+    width: 100%;
     position: fixed;
-    padding: 1em 2rem;
+    background: linear-gradient(rgba(0, 0, 0, 0.550), rgba(0, 0, 0, 0.400), rgba(0, 0, 0, 0.200), rgba(0, 0, 0, 0));
+    padding: 1em 2rem 3rem 2rem;
     z-index: 1;
 }
 
 .title > span:nth-child(1) {
     font-size: 150%;
+    color: #fafafa
 }
 
 .title > span:nth-child(3) {
-    color: #212121
+    font-size: 86%;
+    color: #f5f5f5;
 }
 
 /* Title :: END */
@@ -46,7 +49,7 @@ li {
 /*  Video Controls  */
 
 #video-control {
-    background: transparent;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.200), rgba(0, 0, 0, 0.400), rgba(0, 0, 0, 0.800));
     box-shadow: #000000c5 2px 2px;
     position: fixed;
     margin-bottom: 0;
@@ -58,12 +61,17 @@ li {
     padding: 0 0.5em 0 0.5em;
 }
 
+#video-control > div > ul > li > i {
+    color: #fafafa
+}
+
 #video-control  > div > ul > li {
     list-style-type: none;
     display: inline-block;
     float: left;
     padding: 0.5em 1em;
     cursor: default;
+    color: #FAFAFA;
 }
 
 .mnt-range {
@@ -78,8 +86,17 @@ li {
     cursor: pointer !important;
 }
 
-.btn.volume > ul > li {
+.btn.volume {
+    padding: 0 !important;
+}
+
+.btn.volume > li, input {
     display: inline;
+}
+
+.btn.volume > input {
+    transform: translateY(0.3em);
+    margin-left: 0.5rem;
 }
 
 .btn.play > i, .btn.pause > i{

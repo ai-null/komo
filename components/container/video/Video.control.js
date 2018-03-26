@@ -25,10 +25,8 @@ const VideoControl = ({playBtn}) => {
                         <i className="fa fa-stop"></i>
                     </li>
                     <li className="btn volume">
-                        <ul>
-                            <li><i className="fa fa-volume-up"></i></li>
-                            <li><input type="range" className="volume" /></li>
-                        </ul>
+                        <i className="fa fa-volume-up"></i>
+                        <input type="range" className="volume" />
                     </li>
                     <li className="mnt">
                         0:00/0:00

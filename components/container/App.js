@@ -26,7 +26,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <Title />
-                <Video id={this.state.video} sauce={this.state.filePath === '' ? '' : this.state.filePath} />
+                <Video controls id={this.state.video} sauce={this.state.filePath === '' ? '' : this.state.filePath} />
                 <VideoControl playBtn={this.playBtn} />
             </div>
         )
