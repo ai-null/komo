@@ -1,13 +1,29 @@
 var electron = require('electron')
-var app = electron.app
 var url = require('url')
+var config = require('./assets/config') 
 
-var { BrowserWindow } = electron
+var ipc = electron.ipcMain || electron.remote.ipcMain
+var { BrowserWindow, Menu, dialog, app } = electron
 var { join } = require('path')
-var config = require('./assets/config')
+var {platform} = process.env
 
 var win
-function showWindow (e) {
+let b = [{
+    label: 'File',
+    submenu: [{
+        label: 'Open File',
+        accelerator: config.open_files,
+        click() {
+            dialog.showOpenDialog({
+                properties: ['OpenFile', 'OpenDirectory']
+            }, function (files) {
+                if (files) console.log(files)
+            })
+        }
+    }]
+}]
+
+function showWindow (a) {
     win = new BrowserWindow({
         width: 1080,
         height: 600,
@@ -16,12 +32,34 @@ function showWindow (e) {
     })
 
     win.loadURL(url.format({
-        pathname: join(__dirname, e),
+        pathname: join(__dirname, a),
         protocol: 'file',
         slashes: true
     }))
+
+    Menu.setApplicationMenu(Menu.buildFromTemplate(b))
+
     win.on('closed', () => { win = null })
     win.show()
+}
+
+if (platform === 'darwin') {
+    b.unshift({})
+}
+
+if (config.node_env === 'development') {
+    b.push({
+        label: 'Developer tools',
+        submenu: [{
+            label: 'toggle devtools',
+            accelerator: config.open_devtools,
+            click(item, focusedWindow) {
+                focusedWindow.toggleDevTools()
+            }
+        }]
+    })
+} else {
+    b.pop()
 }
 
 app.on('ready', function () {
