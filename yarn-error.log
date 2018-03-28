@@ -20,7 +20,8 @@ npm manifest:
     "description": "video player based on electron js",
     "main": "electron.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
+      "build": "webpack -wd",
+      "launch": "electron .",
       "start": "concurrently \"webpack -wd\" \"electron .\"",
       "web": "nodemon --exec babel-node index.js"
     },

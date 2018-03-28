@@ -2,8 +2,7 @@ var electron = require('electron')
 var url = require('url')
 var config = require('./assets/config') 
 
-var ipc = electron.ipcMain || electron.remote.ipcMain
-var { BrowserWindow, Menu, dialog, app } = electron
+var { BrowserWindow, Menu, dialog, app, ipcRenderer } = electron
 var { join } = require('path')
 var {platform} = process.env
 
@@ -17,7 +16,9 @@ let b = [{
             dialog.showOpenDialog({
                 properties: ['OpenFile', 'OpenDirectory']
             }, function (files) {
-                if (files) console.log(files)
+                if (files) {
+                    console.log(files)
+                }
             })
         }
     }]

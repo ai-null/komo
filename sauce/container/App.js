@@ -1,7 +1,7 @@
 import React from 'react'
 import Title from './title/Title'
 import Video from './video/Video'
-import VideoControl from './video/Video.control'
+import VideoControl from './video/VideoControl'
 
 export default class App extends React.Component {
     constructor (...argument) {
