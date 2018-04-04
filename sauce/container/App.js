@@ -8,7 +8,8 @@ export default class App extends React.Component {
         super(...argument)
         this.state = {
             inputID: 'inputDOM',
-            video: 'video-player'
+            video: 'video-player',
+            path: this.props.sauce
         }
     }
     
@@ -26,7 +27,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <Title />
-                <Video controls id={this.state.video} sauce={this.state.filePath === '' ? '' : this.state.filePath} />
+                <Video src={this.state.path} id={this.state.video} />
                 <VideoControl playBtn={this.playBtn} />
             </div>
         )

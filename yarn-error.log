@@ -1,5 +1,5 @@
 Arguments: 
-  /home/ainul/.nvm/versions/node/v8.9.4/bin/node /usr/local/bin/yarn run dev
+  /home/ainul/.nvm/versions/node/v8.9.4/bin/node /usr/local/bin/yarn star
 
 PATH: 
   /home/ainul/.nvm/versions/node/v8.9.4/bin:/home/ainul/bin:/home/ainul/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-9-oracle/bin:/usr/lib/jvm/java-9-oracle/db/bin:/usr/lib/jvm/java-9-oracle/bin:/usr/lib/jvm/java-9-oracle/db/bin
@@ -72,7 +72,7 @@ Lockfile:
   No lockfile
 
 Trace: 
-  Error: Command "dev" not found.
+  Error: Command "star" not found. Did you mean "start"?
       at new MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
       at /usr/local/lib/node_modules/yarn/lib/cli.js:87307:17
       at Generator.next (<anonymous>)

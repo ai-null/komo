@@ -5,9 +5,11 @@ import {getFilePath} from '../renderer-process/path'
 
 const dom = document.getElementById('app')
 
-getFilePath()
+let file = []
+
+file.push(getFilePath())
 
 ReactDOM.render(
-    <App />,
+    <App sauce={file[0] === null ? 'lol' : file[0]}/>,
     dom
 )

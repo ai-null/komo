@@ -1,12 +1,12 @@
-var electron = require('electron')
-var url = require('url')
-var config = require('./assets/config') 
+let electron = require('electron')
+let url = require('url')
+let config = require('./assets/config')
 
-var { BrowserWindow, Menu, dialog, app, ipcRenderer } = electron
-var { join } = require('path')
-var {platform} = process.env
+let {BrowserWindow, Menu, dialog, app, ipcMain} = electron
+let {join} = require('path')
+let {platform} = process.env
 
-var win
+let win
 let b = [{
     label: 'File',
     submenu: [{
@@ -14,17 +14,21 @@ let b = [{
         accelerator: config.open_files,
         click() {
             dialog.showOpenDialog({
-                properties: ['OpenFile', 'OpenDirectory']
+                properties: ['openFile', 'multiSelections'],
+                filters: [
+                    {name: 'Videos', extensions: ['mp4', 'mkv', 'avi']},
+                    {name: 'Music', extensions: ['mp3', 'opus', 'aac', 'm4a']}
+                ]
             }, function (files) {
                 if (files) {
-                    console.log(files)
+                    win.webContents.send('open-file', files[0])
                 }
             })
         }
     }]
 }]
 
-function showWindow (a) {
+function showWindow(a) {
     win = new BrowserWindow({
         width: 1080,
         height: 600,
@@ -38,9 +42,15 @@ function showWindow (a) {
         slashes: true
     }))
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(b))
+    // win.webContents.send('open-file', )
 
-    win.on('closed', () => { win = null })
+    win.on('closed', () => {
+        win = null
+    })
+
+    let menus = Menu.buildFromTemplate(b)
+    Menu.setApplicationMenu(menus)
+
     win.show()
 }
 
@@ -57,11 +67,19 @@ if (config.node_env === 'development') {
             click(item, focusedWindow) {
                 focusedWindow.toggleDevTools()
             }
+        }, {
+            label: 'reload',
+            accelerator: config.reload,
+            role: 'reload'
         }]
     })
 } else {
     b.pop()
 }
+
+app.on('window-all-closed', function () {
+    app.quit()
+})
 
 app.on('ready', function () {
     showWindow(`./views/index.html`)
