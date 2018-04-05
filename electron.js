@@ -6,6 +6,8 @@ let {BrowserWindow, Menu, dialog, app, ipcMain} = electron
 let {join} = require('path')
 let {platform} = process.env
 
+require('events').EventEmitter.defaultMaxListeners = 15
+
 let win
 let b = [{
     label: 'File',

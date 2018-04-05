@@ -12,7 +12,7 @@ const VideoControl = ({playBtn}) => {
                     <li className="btn backward">
                         <i className="fa fa-backward"></i>
                     </li>
-                    <li className="btn play">
+                    <li className="btn play" onClick={playBtn}>
                         <i className="fa fa-play"></i>
                     </li>
                     <li className="btn forward">
