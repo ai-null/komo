@@ -14,15 +14,21 @@ export default class App extends React.Component {
             video: 'video-player',
         }
     }
-    
-    getFilePath () {
-        ipcRenderer.on('open-file', (e, path) => {
-            this.setState({
-                path
-            })
-        })
 
-        console.log(this.state.path)
+    componentDidMount () {
+        this.getFilePath()
+    }
+
+    getFilePath () {
+        // So this is the problem of MaxEventListener on my app
+        // Then, how i can solve this ?
+        let fpath = []
+        ipcRenderer.on('open-file', (e, path) => {
+            fpath.push(path)
+            for (let i in fpath) {
+                console.log(fpath)
+            }
+        })
     }
 
     playBtn () {
