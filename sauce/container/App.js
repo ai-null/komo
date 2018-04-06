@@ -6,43 +6,79 @@ import VideoControl from './video/VideoControl'
 let electron = window.require('electron')
 let {ipcRenderer} = electron || electron.remote
 
+const VIDEOID = 'video-player'
+const PROG_BAR = 'mnt-range'
+const VOLM_BAR = 'volume-range'
+
 export default class App extends React.Component {
-    constructor (...argument) {
+    constructor(...argument) {
         super(...argument)
         this.state = {
-            inputID: 'inputDOM',
-            video: 'video-player',
+
         }
     }
 
-    componentDidMount () {
+    componentDidMount() {
         this.getFilePath()
+        this.controls()
+        this.shortcut()
+        // setting DOM
+        document.getElementById(PROG_BAR).value = 0
+        document.getElementById(VOLM_BAR).value = 0
     }
 
-    getFilePath () {
-        // So this is the problem of MaxEventListener on my app
-        // Then, how i can solve this ?
-        let fpath = []
+    getFilePath() {
         ipcRenderer.on('open-file', (e, path) => {
-            fpath.push(path)
-            for (let i in fpath) {
-                console.log(fpath)
+            this.setState({
+                path
+            })
+            document.getElementById(VIDEOID).classList.remove('playing')
+        })
+    }
+
+    shortcut() {
+        let v = document.getElementById(VIDEOID)
+        window.addEventListener('keyup', (e) => {
+            switch (e.keyCode) {
+                case 32:
+                    if (v.classList.length === 0 ) {
+                        v.classList.add('playing')
+                        v.play()
+                    } else {
+                        v.pause()
+                        v.classList.remove('playing')
+                    }
+                break;
             }
         })
     }
 
-    playBtn () {
-        let videoDOM = document.getElementById('video-player')
-        videoDOM.play()
+    controls() {
+        let btn = document.getElementsByClassName('btn')
+        let v = document.getElementById(VIDEOID)
+
+        for (let e of btn) {
+            e.addEventListener('click', () => {
+                switch (e.id) {
+                    case 'play':
+                        v.play()
+                        v.classList.add('playing')
+                        break;
+                    case 'expand':
+                        v.webkitRequestFullscreen();
+                        break;
+                }
+            })
+        }
     }
 
-    render () {
-        return (
-            <div>
-                <Title />
-                <Video sauce={this.state.path === undefined ? ' ' : this.state.path} id={this.state.video} />
-                <VideoControl playBtn={this.playBtn} />
-            </div>
+    render() {
+        return ( 
+        <div >
+            <Title />
+            <Video sauce = {this.state.path === undefined ? ' ' : this.state.path} id = {VIDEOID}/> 
+            <VideoControl />
+        </div>
         )
     }
 }
