@@ -24,6 +24,7 @@ let b = [{
             }, function (files) {
                 if (files) {
                     win.webContents.send('open-file', files[0])
+                    win.webContents.send('kntl', files)
                 }
             })
         }

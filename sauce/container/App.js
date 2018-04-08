@@ -22,6 +22,7 @@ export default class App extends React.Component {
         this.getFilePath()
         this.controls()
         this.shortcut()
+
         // setting DOM
         document.getElementById(PROG_BAR).value = 0
         document.getElementById(VOLM_BAR).value = 0
@@ -33,11 +34,21 @@ export default class App extends React.Component {
                 path
             })
 
+            document.getElementById(VIDEOID).classList.remove('playing')
+
             let f = document.getElementById('play').firstChild.classList
             f.remove('fa-pause')
             f.add('fa-play')
+        })
 
-            document.getElementById(VIDEOID).classList.remove('playing')
+        ipcRenderer.on('kntl', (e, data) => {
+            let path = data[0].split('/');
+            let panjang = path.length;
+
+            let title = path[panjang - 1]
+            this.setState({
+                title
+            })
         })
     }
 
@@ -75,7 +86,7 @@ export default class App extends React.Component {
                 switch (e.id) {
                     case 'play': // play and pause
                         let f = e.firstChild.classList
-                        if (v.classList.contains('playing')) {
+                        if (f.contains('fa-play')) {
                             // play the video and set the class
                             v.play()
                             v.classList.add('playing')
@@ -100,8 +111,8 @@ export default class App extends React.Component {
     render() {
         return ( 
         <div >
-            <Title />
-            <Video sauce = {this.state.path === undefined ? ' ' : this.state.path} id = {VIDEOID}/> 
+            <Title t={this.state.title === undefined ? 'Welcome to Komo' : this.state.title}/>
+            <Video sauce = {this.state.path === undefined ? null : this.state.path} id = {VIDEOID}/> 
             <VideoControl />
         </div>
         )
