@@ -24,8 +24,12 @@ export default class App extends React.Component {
         this.getFilePath()
         this.controls()
         this.shortcut()
+
+        // Video
         this.videoTime('playing')
         this.videoTime()
+
+        this.volume()
 
         // setting DOM
         document.getElementById(PROG_BAR).value = 0
@@ -170,6 +174,13 @@ export default class App extends React.Component {
                     end: t.join(':')
                 })
             }
+        })
+    }
+
+    volume() {
+        let e = document.getElementById('volume-range')
+        e.addEventListener('change', () => {
+            document.getElementById(VIDEOID).volume = e.value/100
         })
     }
 
