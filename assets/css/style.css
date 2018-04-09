@@ -165,3 +165,60 @@ input {
 .btn.list {
     float: right !important;
 }
+
+/* Middle Btn */
+
+.middleBtn {
+    position: absolute;
+    cursor: pointer;
+    z-index: 4;
+    color: #ffd800;
+    background: rgba(0, 0, 0, 0.42);
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    filter: blur(1px);
+    visibility: hidden
+}
+
+.middleBtn.show {
+    transform: translateY(-50%) translateX(-50%) scale(1);
+    animation: scaledUp 0.3s ease-in-out;
+}
+
+.middleBtn.isGone {
+    transform: translateY(-50%) translateX(-50%) scale(0.2);
+    animation: scaledDown 0.3s ease-out;
+}
+
+@keyframes scaledUp {
+    0% { visibility: show; transform: translateY(-50%) translateX(-50%) scale(0.3) }
+    25% { visibility: show; transform: translateY(-50%) translateX(-50%) scale(0.4) }
+    50% { visibility: show; transform: translateY(-50%) translateX(-50%) scale(0.6) }
+    75% { visibility: show; transform: translateY(-50%) translateX(-50%) scale(0.9) }
+    100% { visibility: show; transform: translateY(-50%) translateX(-50%) scale(1)}
+}
+
+@keyframes scaledDown {
+    0% { transform: translateY(-50%) translateX(-50%) scale(0.8) }
+    25% { transform: translateY(-50%) translateX(-50%) scale(0.6) }
+    50% { transform: translateY(-50%) translateX(-50%) scale(0.4) }
+    75% { transform: translateY(-50%) translateX(-50%) scale(0.2) }
+    100% { visibility: hidden }
+}
+
+.middleBtn:hover {
+    filter: blur(0)
+}
+
+.middleBtn > i {
+    font-size: 40px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-37%);
+}

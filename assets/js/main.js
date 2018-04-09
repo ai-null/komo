@@ -1,7 +1,11 @@
+// use this file for styling or animation
+// I use this file because i can't use async and await inside webpack
+
 async function background () {
     let video = await document.getElementById('video-player')
     let title = await document.getElementById('title')
     let vidControl = await document.getElementById('video-control')
+    let midButton = await document.getElementById('middleBtn')
 
     let mouseenter = (e) => {
         e.addEventListener('mouseenter', () => {
@@ -12,8 +16,12 @@ async function background () {
 
     let mouseleave = (e) => {
         e.addEventListener('mouseleave', () => {
-            title.style.top = '-5rem'
-            vidControl.style.bottom = '-5rem'
+            if (video.src === null || !video.src) {
+                return
+            } else {
+                title.style.top = '-7rem'
+                vidControl.style.bottom = '-5rem'
+            }
         })
     }
 
@@ -23,10 +31,9 @@ async function background () {
     
     video.addEventListener('mouseleave', () => {
         if (video.src === null || !video.src) {
-            title.style.top = '0'
-            vidControl.style.bottom = '0'
+            return
         } else {
-            title.style.top = '-5rem'
+            title.style.top = '-7rem'
             vidControl.style.bottom = '-5rem'
         }
 
