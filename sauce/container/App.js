@@ -113,32 +113,36 @@ export default class App extends React.Component {
             e.addEventListener('click', () => {
                 switch (e.id) {
                     case 'play': // play and pause
-                        if (f.contains('fa-play')) {
-                            // play the video and set the class
-                            v.play()
-                            v.classList.add('playing')
-
-                            // setting play button
-                            f.remove('fa-play')
-                            f.add('fa-pause')
-
-                            g.classList.add('isGone')
-                            setTimeout(() => {
-                                g.classList.remove('isGone')
-                                g.style.visibility = 'hidden'
-                            }, 300);
+                        if (v.src === "") {
+                            return
                         } else {
-                            v.pause()
-                            v.classList.remove('playing')
-
-                            g.style.visibility = 'visible'
-                            g.classList.add('show')
-                            setTimeout(() => {
-                                g.classList.remove('show')
-                            }, 300);
-
-                            f.remove('fa-pause')
-                            f.add('fa-play')
+                            if (f.contains('fa-play')) {
+                                // play the video and set the class
+                                v.play()
+                                v.classList.add('playing')
+    
+                                // setting play button
+                                f.remove('fa-play')
+                                f.add('fa-pause')
+    
+                                g.classList.add('isGone')
+                                setTimeout(() => {
+                                    g.classList.remove('isGone')
+                                    g.style.visibility = 'hidden'
+                                }, 300);
+                            } else {
+                                v.pause()
+                                v.classList.remove('playing')
+    
+                                g.style.visibility = 'visible'
+                                g.classList.add('show')
+                                setTimeout(() => {
+                                    g.classList.remove('show')
+                                }, 300);
+    
+                                f.remove('fa-pause')
+                                f.add('fa-play')
+                            }
                         }
                         break;
                     case 'middleBtn':
