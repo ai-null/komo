@@ -24,6 +24,8 @@ export default class App extends React.Component {
         this.getFilePath()
         this.controls()
         this.shortcut()
+        this.videoTime('playing')
+        this.videoTime()
 
         // setting DOM
         document.getElementById(PROG_BAR).value = 0
@@ -80,14 +82,14 @@ export default class App extends React.Component {
                 break;
                 
             default:
+                v.classList.remove('playing')
+
                 g.classList.remove('hidden')
                 g.classList.add('show')
                 setTimeout(() => {
                     g.classList.remove('show')
                     g.classList.remove('isGone')
                 }, 300);
-
-                v.classList.remove('playing')
 
                 f.remove('fa-pause')
                 f.add('fa-play')
@@ -115,11 +117,12 @@ export default class App extends React.Component {
 
     shortcut() {
         let v = document.getElementById(VIDEOID)
+        let f = document.getElementById('play').firstChild.classList
 
         window.addEventListener('keyup', (e) => {
             switch (e.keyCode) {
                 case 32: // space || pause & play
-                    v.classList.length === 0 ? this.role('play') : this.role('pause')
+                v.src === "" ? console.log('nothing') : f.contains('fa-play') ? this.role('play') : this.role('pause')
                     break;
             }
         })
@@ -147,13 +150,36 @@ export default class App extends React.Component {
         }
     }
 
+    videoTime(r) {
+        let v = document.getElementById(VIDEOID)
+
+        v.addEventListener('timeupdate', () => {
+            let t = []
+            let d = new Date(r === 'playing' ? v.currentTime*1000 : v.duration*1000)
+
+            t.push(d.getUTCHours())
+            t.push(d.getUTCMinutes())
+            t.push(d.getUTCSeconds())
+
+            if (r === 'playing') {
+                this.setState({
+                    time: t.join(':')
+                })
+            } else {
+                this.setState({
+                    end: t.join(':')
+                })
+            }
+        })
+    }
+
     render() {
         return ( 
             <div>
                 <Title t={this.state.title === undefined ? 'Welcome to Komo' : this.state.title}/>
                 <MiddleBtn />
                 <Video sauce={this.state.path === undefined ? null : this.state.path}id={VIDEOID}/>
-                <VideoControl />
+                <VideoControl t={this.state.time} e={this.state.end}/>
             </div>
         )
     }

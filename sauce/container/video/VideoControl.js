@@ -1,6 +1,6 @@
 import React from 'react'
 
-const VideoControl = () => {
+const VideoControl = ({t, e}) => {
     return (
         <div id="video-control">
             <input className="mnt-range" type="range" id="mnt-range"/>
@@ -29,7 +29,7 @@ const VideoControl = () => {
                         <input type="range" id="volume-range" />
                     </li>
                     <li className="mnt" id="mnt">
-                        0:00/0:00
+                        {t === undefined ? '0:0:0' : t}/{e === undefined || e === 'NaN:NaN:NaN' ? '0:0:0' : e}
                     </li>
                     {/* Float Right */}
                     <li className="btn expand" id="expand">
