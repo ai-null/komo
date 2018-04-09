@@ -32,47 +32,67 @@ export default class App extends React.Component {
 
     /**
      * 
-     * @param {DOM} arg
-     * put access dom here, like video's or button's DOM
+     * @param {String} arg
+     * put role here.
+     * - play
+     * - pause
+     * - {null}
      */
-    play(...arg) {
+    role(arg) {
         let v = document.getElementById(VIDEOID)
         let g = document.getElementById(MID_BTN)
         let f = document.getElementById('play').firstChild.classList
-        // video play        
-        v.play()
-        v.classList.add('playing')
 
-        // showing the middle button
-        g.classList.add('isGone')
-        setTimeout(() => {
-            g.classList.remove('isGone')
-            g.style.visibility = 'hidden'
-        }, 300);
 
-        // setting play button
-        f.remove('fa-play')
-        f.add('fa-pause')
-    }
+        switch (arg) {
+            case 'pause':
+                 // video pause
+                v.pause()
+                v.classList.remove('playing')
 
-    pause (...arg) {
-        let v = document.getElementById(VIDEOID)
-        let g = document.getElementById(MID_BTN)
-        let f = document.getElementById('play').firstChild.classList
-        // video pause
-        v.pause()
-        v.classList.remove('playing')
+                // showing the middle button
+                g.classList.add('show')
+                g.classList.remove('hidden')
+                setTimeout(() => {
+                    g.classList.remove('show')
+                }, 300);
 
-        // showing the middle button
-        g.style.visibility = 'visible'
-        g.classList.add('show')
-        setTimeout(() => {
-            g.classList.remove('show')
-        }, 300);
+                // setting play button on video controls
+                f.remove('fa-pause')
+                f.add('fa-play')
+                break;
 
-        // setting play button on video controls
-        f.remove('fa-pause')
-        f.add('fa-play')
+            case 'play':
+                // video play
+                v.play()
+                v.classList.add('playing')
+
+                // removing mid button
+                g.classList.add('isGone')
+                setTimeout(() => {
+                    g.classList.remove('isGone')
+                    g.classList.add('hidden')
+                }, 300);
+
+                // setting play button
+                f.remove('fa-play')
+                f.add('fa-pause')
+                break;
+                
+            default:
+                g.classList.remove('hidden')
+                g.classList.add('show')
+                setTimeout(() => {
+                    g.classList.remove('show')
+                    g.classList.remove('isGone')
+                }, 300);
+
+                v.classList.remove('playing')
+
+                f.remove('fa-pause')
+                f.add('fa-play')
+                break;
+        }
     }
 
     getFilePath() {
@@ -80,28 +100,13 @@ export default class App extends React.Component {
             this.setState({
                 path
             })
-
-            document.getElementById(VIDEOID).classList.remove('playing')
-
-            let f = document.getElementById('play').firstChild.classList
-            let midBtn = document.getElementById(MID_BTN)
-
-            midBtn.style.visibility = 'visible'
-            midBtn.classList.add('show')
-            setTimeout(() => {
-                midBtn.classList.remove('show')
-                midBtn.classList.remove('isGone')
-            }, 300);
-
-            f.remove('fa-pause')
-            f.add('fa-play')
+            this.role()
         })
 
         ipcRenderer.on('kntl', (e, data) => {
             let p = data[0].split('/');
-            let l = p.length;
+            let title = p[p.length - 1]
 
-            let title = p[l - 1]
             this.setState({
                 title
             })
@@ -114,7 +119,7 @@ export default class App extends React.Component {
         window.addEventListener('keyup', (e) => {
             switch (e.keyCode) {
                 case 32: // space || pause & play
-                    v.classList.length === 0 ? this.play() : this.pause()
+                    v.classList.length === 0 ? this.role('play') : this.role('pause')
                     break;
             }
         })
@@ -129,10 +134,10 @@ export default class App extends React.Component {
             e.addEventListener('click', () => {
                 switch (e.id) {
                     case 'play': // play and pause
-                        v.src === "" ? console.log('nothing') : f.contains('fa-play') ? this.play() : this.pause()
+                        v.src === "" ? console.log('nothing') : f.contains('fa-play') ? this.role('play') : this.role('pause')
                         break;
                     case 'middleBtn':
-                        v.classList.length === 0 ? this.play() : this.pause()
+                        v.classList.length === 0 ? this.role('play') : this.role('pause')
                         break;
                     case 'expand':
                         v.webkitRequestFullscreen();

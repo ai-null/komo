@@ -182,6 +182,9 @@ input {
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
     filter: blur(1px);
+}
+
+.middleBtn.hidden {
     visibility: hidden
 }
 
