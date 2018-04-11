@@ -24,16 +24,6 @@ export default class App extends React.Component {
         this.getFilePath()
         this.controls()
         this.shortcut()
-
-        // Video
-        this.videoTime('playing')
-        this.videoTime()
-
-        this.volume()
-
-        // setting DOM
-        document.getElementById(PROG_BAR).value = 0
-        document.getElementById(VOLM_BAR).value = 0
     }
 
     /**
@@ -137,6 +127,18 @@ export default class App extends React.Component {
         let v = document.getElementById(VIDEOID)
         let f = document.getElementById('play').firstChild.classList
 
+        document.getElementById(VOLM_BAR).value = 80
+        
+        // Video Controls
+        v.addEventListener('timeupdate', () => {
+            document.getElementById('progress-bar').style.width = String(Math.round((100/v.duration)*v.currentTime)) + "%"
+
+            this.videoTime(v, 'play')
+            this.videoTime(v)
+        })
+
+        this.seekbar(v)
+
         for (let e of btn) {
             e.addEventListener('click', () => {
                 switch (e.id) {
@@ -151,21 +153,37 @@ export default class App extends React.Component {
                         break;
                 }
             })
+
+            e.addEventListener('change', () => {
+                switch (e.id) {
+                    case 'volume-range':
+                        v.volume = e.value/100
+                        break;
+                }
+            })
         }
     }
 
-    videoTime(r) {
-        let v = document.getElementById(VIDEOID)
+    seekbar(v) {
+        let pb = document.getElementById('progress-bar-hidden')
+        pb.addEventListener('mousemove', function (e) {
+            this.addEventListener('click', () => {
+                v.currentTime = ((e.offsetX)/e.target.offsetWidth)*v.duration
+            })
+        })
+    }
 
-        v.addEventListener('timeupdate', () => {
-            let t = []
-            let d = new Date(r === 'playing' ? v.currentTime*1000 : v.duration*1000)
+    videoTime(v, r = '') {
+        let role = 'play'
+
+        let t = []
+            let d = new Date(r === role ? v.currentTime*1000 : v.duration*1000)
 
             t.push(d.getUTCHours())
             t.push(d.getUTCMinutes())
             t.push(d.getUTCSeconds())
 
-            if (r === 'playing') {
+            if (r === role) {
                 this.setState({
                     time: t.join(':')
                 })
@@ -174,14 +192,11 @@ export default class App extends React.Component {
                     end: t.join(':')
                 })
             }
-        })
-    }
 
-    volume() {
-        let e = document.getElementById('volume-range')
-        e.addEventListener('change', () => {
-            document.getElementById(VIDEOID).volume = e.value/100
-        })
+            // if video's end
+            if (v.currentTime === v.duration) {
+                this.role()
+            }
     }
 
     render() {

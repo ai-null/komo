@@ -3,7 +3,12 @@ import React from 'react'
 const VideoControl = ({t, e}) => {
     return (
         <div id="video-control">
-            <input className="mnt-range" type="range" id="mnt-range"/>
+            <div id="progress" className="progress">
+                <div id="progress-bar-hidden" className="progress-bar-hidden"></div>
+                <div id="progress-bar" className="progress-bar">
+                    <div id="progress-thumb"></div>
+                </div>
+            </div>
             <div>
                 <ul>
                     <li className="btn fast-backward" id="fast-backward">
@@ -24,9 +29,9 @@ const VideoControl = ({t, e}) => {
                     <li className="btn stop" id="stop">
                         <i className="fa fa-stop"></i>
                     </li>
-                    <li className="btn volume" id="volume">
+                    <li className="volume">
                         <i className="fa fa-volume-up"></i>
-                        <input type="range" id="volume-range" />
+                        <input type="range" className="btn" id="volume-range" />
                     </li>
                     <li className="mnt" id="mnt">
                         {t === undefined ? '0:0:0' : t}/{e === undefined || e === 'NaN:NaN:NaN' ? '0:0:0' : e}

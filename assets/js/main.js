@@ -2,10 +2,9 @@
 // I use this file because i can't use async and await inside webpack
 
 async function background () {
-    let video = await document.getElementById('video-player')
+    let v = await document.getElementById('video-player')
     let title = await document.getElementById('title')
     let vidControl = await document.getElementById('video-control')
-    let midButton = await document.getElementById('middleBtn')
 
     let mouseenter = (e) => {
         e.addEventListener('mouseenter', () => {
@@ -16,7 +15,7 @@ async function background () {
 
     let mouseleave = (e) => {
         e.addEventListener('mouseleave', () => {
-            if (video.src === null || !video.src) {
+            if (v.src === null || !v.src) {
                 return
             } else {
                 title.style.top = '-7rem'
@@ -25,12 +24,12 @@ async function background () {
         })
     }
 
-    mouseenter(video)
+    mouseenter(v)
     mouseleave(title)
     mouseleave(vidControl)
     
-    video.addEventListener('mouseleave', () => {
-        if (video.src === null || !video.src) {
+    v.addEventListener('mouseleave', () => {
+        if (v.src === null || !v.src) {
             return
         } else {
             title.style.top = '-7rem'

@@ -36,10 +36,6 @@ input[type=range]:focus {
     outline: none;
 }
 
-input[type=range]:hover {
-    height: 5px;
-}
-
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 5px;
@@ -56,6 +52,44 @@ input[type=range]::-webkit-slider-thumb {
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -5px;
+    border: 2px solid #d6b813
+}
+
+.progress {
+    width: 97%;
+    left: 50%;
+    top: -0.5rem;
+    height: 5px;
+    transform: translateX(-50%);
+    position: absolute;
+    background: rgba(255, 255, 255, 0.267);
+    cursor: pointer
+}
+
+.progress-bar {
+    background: #d6b813;
+    height: 6px;
+    width: 0%;
+}
+
+.progress-bar-hidden {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.progress-bar > div {
+    float: right;
+    height: 11px;
+    width: 11px;
+    border-radius: 50%;
+    background: #ffd800;
+    cursor: pointer;
+    -webkit-appearance: none;
+    top: -5px;
+    left: 8px;
+    position: relative;
+    content: " ";
     border: 2px solid #d6b813
 }
 
@@ -119,38 +153,30 @@ input[type=range]::-webkit-slider-thumb {
     color: #FAFAFA;
 }
 
-.mnt-range {
-    width: 99%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0 auto;
-    position: relative
-}
-
 .btn {
     cursor: pointer !important;
 }
 
-.btn.volume {
+.volume {
     padding: 1em 0 1em 0;
     cursor: default !important;
 }
 
-.btn.volume>i {
+.volume>i {
     cursor: pointer !important;
 }
 
-.btn.volume>input {
+.volume>input {
     position: relative;
     top: -0.6em
 }
 
-.btn.volume>i,
+.volume>i,
 input {
     display: inline-block
 }
 
-.btn.volume>input {
+.volume>input {
     transform: translateY(0.3em);
     margin-left: 0.5rem;
 }

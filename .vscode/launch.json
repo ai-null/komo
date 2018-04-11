@@ -6,6 +6,11 @@
     "configurations": [
         {
             "type": "node",
+            "request": "attach",
+            "name": "Attach"
+        },
+        {
+            "type": "node",
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/electron.js"
