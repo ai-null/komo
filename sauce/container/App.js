@@ -8,7 +8,7 @@ let electron = window.require('electron')
 let {ipcRenderer} = electron || electron.remote
 
 const VIDEOID = 'video-player'
-const PROG_BAR = 'mnt-range'
+const PROG_BAR = 'progress-bar-hidden'
 const VOLM_BAR = 'volume-range'
 const MID_BTN = 'middleBtn'
 
@@ -24,6 +24,8 @@ export default class App extends React.Component {
         this.getFilePath()
         this.controls()
         this.shortcut()
+
+        document.getElementById(VOLM_BAR).value = 80
     }
 
     /**
@@ -126,8 +128,6 @@ export default class App extends React.Component {
         let btn = document.getElementsByClassName('btn')
         let v = document.getElementById(VIDEOID)
         let f = document.getElementById('play').firstChild.classList
-
-        document.getElementById(VOLM_BAR).value = 80
         
         // Video Controls
         v.addEventListener('timeupdate', () => {
@@ -137,7 +137,7 @@ export default class App extends React.Component {
             this.videoTime(v)
         })
 
-        this.seekbar(v)
+        this.seekbar(v)        
 
         for (let e of btn) {
             e.addEventListener('click', () => {
@@ -165,12 +165,22 @@ export default class App extends React.Component {
     }
 
     seekbar(v) {
-        let pb = document.getElementById('progress-bar-hidden')
-        pb.addEventListener('mousemove', function (e) {
-            this.addEventListener('click', () => {
-                v.currentTime = ((e.offsetX)/e.target.offsetWidth)*v.duration
+        let g = false
+        let pb = document.getElementById(PROG_BAR)
+        
+        if (v.src !== "" || v.src !== undefined) {
+            pb.addEventListener('mousemove', (e) => {
+                if (g) {
+                    v.currentTime = ((e.offsetX)/e.target.offsetWidth)*v.duration
+                }
+                
+                window.addEventListener('mouseup', () => g = false)
+                pb.addEventListener('mousedown', () => g = true)
+                pb.addEventListener('click', () => {
+                    v.currentTime = ((e.offsetX)/e.target.offsetWidth)*v.duration
+                })
             })
-        })
+        }
     }
 
     videoTime(v, r = '') {
