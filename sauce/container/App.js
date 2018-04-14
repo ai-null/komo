@@ -15,6 +15,7 @@ const MID_BTN = 'middleBtn'
 export default class App extends React.Component {
     constructor(...argument) {
         super(...argument)
+        this.path = [""]
         this.state = {
 
         }
@@ -25,16 +26,14 @@ export default class App extends React.Component {
         this.controls()
         this.shortcut()
 
+        // this.playlist()
+
         document.getElementById(VOLM_BAR).value = 80
     }
 
     /**
-     * 
-     * @param {String} arg
-     * put role here.
-     * - play
-     * - pause
-     * - {null}
+     * action to video.
+     * @param {String} arg role : play, pause, {null | will be execute if the video ended}
      */
     role(arg) {
         let v = document.getElementById(VIDEOID)
@@ -94,16 +93,40 @@ export default class App extends React.Component {
     }
 
     getFilePath() {
+        let f = 0
         ipcRenderer.on('open-file', (e, path) => {
-            this.setState({
-                path
+            let g = new Promise((resolve, reject) => {
+                if (path !== undefined) {
+                    resolve(path)
+                }
             })
+
+            g.then(path => {
+                this.path.push(path)
+                return path
+            })
+            .then(e => {
+                this.setState({
+                    path: e
+                })
+            })
+            .then(() => {
+                f = 1
+
+                this.playlist(f)
+                console.log("getFilePath",f)
+            })
+            .catch(err => {return})
+
             this.role()
         })
 
         ipcRenderer.on('kntl', (e, data) => {
-            let p = data[0].split('/');
-            let title = p[p.length - 1]
+            // pick the last data in array
+            // split all "/"
+            let p = data[data.length-1].split('/');
+            // then pick the last data (file's name) easy one
+            let title = p[p.length-1]
 
             this.setState({
                 title
@@ -148,6 +171,9 @@ export default class App extends React.Component {
                     case 'middleBtn':
                         v.classList.length === 0 ? this.role('play') : this.role('pause')
                         break;
+                    case 'list':
+                        console.log(this.path)
+                        break;
                     case 'expand':
                         v.webkitRequestFullscreen();
                         break;
@@ -183,30 +209,58 @@ export default class App extends React.Component {
         }
     }
 
+    /**
+     * video's current time and duration
+     * @param {String} v update currentTime
+     * @param {null} r video's duration
+     */
     videoTime(v, r = '') {
-        let role = 'play'
-
         let t = []
-            let d = new Date(r === role ? v.currentTime*1000 : v.duration*1000)
+        let role = 'play'
+        let d = new Date(r === role ? v.currentTime*1000 : v.duration*1000)
 
-            t.push(d.getUTCHours())
-            t.push(d.getUTCMinutes())
-            t.push(d.getUTCSeconds())
+        t.push(d.getUTCHours())
+        t.push(d.getUTCMinutes())
+        t.push(d.getUTCSeconds())
 
-            if (r === role) {
+        if (r === role) {
+            this.setState({
+                time: t.join(':')
+            })
+        } else {
+            this.setState({
+                end: t.join(':')
+            })
+        }
+
+        // if video's end
+        if (v.currentTime === v.duration) {
+            this.role()
+        }
+    }
+
+    // first.. it will looping the path from this.path
+    // set the data.
+    // v.src = <change the data>
+
+    playlist(f) {
+        f = 0
+        let v = document.getElementById(VIDEOID)
+        
+        v.addEventListener('ended', () => {
+            f++
+
+            this.setState({
+                path: this.path[f]
+            })
+            if (f === this.path.length) {
+                f = 1
                 this.setState({
-                    time: t.join(':')
-                })
-            } else {
-                this.setState({
-                    end: t.join(':')
+                    path: this.path[f]
                 })
             }
-
-            // if video's end
-            if (v.currentTime === v.duration) {
-                this.role()
-            }
+            console.log("playlist", f)
+        })
     }
 
     render() {

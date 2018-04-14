@@ -40,7 +40,7 @@ const VideoControl = ({t, e}) => {
                     <li className="btn expand" id="expand">
                         <i className="fa fa-expand"></i>
                     </li>
-                    <li className="btn list" title="Player list">
+                    <li className="btn list" id="list" title="Player list">
                         <i className="fa fa-list-alt"></i>
                     </li>
                 </ul>

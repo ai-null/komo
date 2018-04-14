@@ -23,7 +23,10 @@ let b = [{
                 ]
             }, function (files) {
                 if (files) {
-                    win.webContents.send('open-file', files[0])
+                    for (let i in files) {
+                        win.webContents.send('open-file', files[i])
+                    }
+
                     win.webContents.send('kntl', files)
                 }
             })
