@@ -198,8 +198,8 @@ input {
     position: absolute;
     cursor: pointer;
     z-index: 4;
-    color: #ffd800;
-    background: rgba(0, 0, 0, 0.42);
+    color: #fafafa;
+    background: rgba(0, 0, 0, 0.61);
     width: 75px;
     height: 75px;
     border-radius: 50%;
@@ -245,7 +245,7 @@ input {
 }
 
 .middleBtn > i {
-    font-size: 40px;
+    font-size: 29px;
     position: relative;
     top: 50%;
     left: 50%;

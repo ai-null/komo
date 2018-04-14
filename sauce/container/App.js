@@ -256,7 +256,8 @@ export default class App extends React.Component {
             if (f === this.path.length) {
                 f = 1
                 this.setState({
-                    path: this.path[f]
+                    path: this.path[f],
+                    title: this.path[f]
                 })
             }
             console.log("playlist", f)
