@@ -11,7 +11,7 @@ const VideoControl = ({t, e}) => {
             </div>
             <div>
                 <ul>
-                    <li className="btn fast-backward" id="fast-backward">
+                    <li className="btn previous" id="previous">
                         <i className="fa fa-fast-backward"></i>
                     </li>
                     <li className="btn backward" id="backward">
@@ -23,7 +23,7 @@ const VideoControl = ({t, e}) => {
                     <li className="btn forward" id="forward">
                         <i className="fa fa-forward"></i>
                     </li>
-                    <li className="btn fast-forward" id="fast-forward">
+                    <li className="btn next" id="next">
                         <i className="fa fa-fast-forward"></i>
                     </li>
                     <li className="btn stop" id="stop">

@@ -27,7 +27,7 @@ let b = [{
                         win.webContents.send('open-file', files[i])
                     }
 
-                    win.webContents.send('kntl', files)
+                    win.webContents.send('kntl', files[files.length - 1])
                 }
             })
         }

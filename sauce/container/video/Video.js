@@ -1,8 +1,11 @@
 import React from 'react'
 
+let g = 0
 const Video = ({sauce, id}) => {
     return (
-        <video src={sauce} id={id}></video>
+        <div>
+            <video id={id} src={sauce}></video>
+        </div>
     )
 }
 

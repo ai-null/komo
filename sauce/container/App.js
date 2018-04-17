@@ -6,6 +6,7 @@ import MiddleBtn from './video/MiddleBtn';
 
 let electron = window.require('electron')
 let {ipcRenderer} = electron || electron.remote
+let num = 0
 
 const VIDEOID = 'video-player'
 const PROG_BAR = 'progress-bar-hidden'
@@ -15,9 +16,8 @@ const MID_BTN = 'middleBtn'
 export default class App extends React.Component {
     constructor(...argument) {
         super(...argument)
-        this.path = [""]
+        this.path = []
         this.state = {
-
         }
     }
 
@@ -28,7 +28,7 @@ export default class App extends React.Component {
 
         // this.playlist()
 
-        document.getElementById(VOLM_BAR).value = 80
+        document.getElementById(VOLM_BAR).value = 0
     }
 
     /**
@@ -93,44 +93,57 @@ export default class App extends React.Component {
     }
 
     getFilePath() {
-        let f = 0
+        let v = document.getElementById(VIDEOID)
+        let g = 0
+
         ipcRenderer.on('open-file', (e, path) => {
-            let g = new Promise((resolve, reject) => {
+            this.role()
+            
+            new Promise((resolve, reject) => {
                 if (path !== undefined) {
                     resolve(path)
                 }
-            })
-
-            g.then(path => {
-                this.path.push(path)
-                return path
-            })
-            .then(e => {
+            }).then(e => {
+                this.path.push(e)
                 this.setState({
                     path: e
                 })
-            })
-            .then(() => {
-                f = 1
-
-                this.playlist(f)
-                console.log("getFilePath",f)
+            }).then(() => {
+                if (this.path.length !== 1) {
+                    g = this.path.length - 1
+                }
             })
             .catch(err => {return})
-
-            this.role()
         })
 
         ipcRenderer.on('kntl', (e, data) => {
-            // pick the last data in array
-            // split all "/"
-            let p = data[data.length-1].split('/');
-            // then pick the last data (file's name) easy one
-            let title = p[p.length-1]
+            this.title(data)
+        })
 
-            this.setState({
-                title
-            })
+        v.onended = () => {
+            if (this.path.length - 1 === g) {
+                g = 0;
+                this.setState({
+                    path: this.path[0]
+                })
+                console.log(true, g)
+            } else {
+                g++
+                this.setState({
+                    path: this.path[g]
+                })
+                console.log(false, g)
+            }
+            console.log(g)
+        }
+    }
+
+    title(data) {
+        let p = data.split('/');
+        let title = p[p.length-1]
+
+        this.setState({
+            title
         })
     }
 
@@ -152,6 +165,9 @@ export default class App extends React.Component {
         let v = document.getElementById(VIDEOID)
         let f = document.getElementById('play').firstChild.classList
         
+
+        v.volume = 0
+
         // Video Controls
         v.addEventListener('timeupdate', () => {
             document.getElementById('progress-bar').style.width = String(Math.round((100/v.duration)*v.currentTime)) + "%"
@@ -239,37 +255,12 @@ export default class App extends React.Component {
         }
     }
 
-    // first.. it will looping the path from this.path
-    // set the data.
-    // v.src = <change the data>
-
-    playlist(f) {
-        f = 0
-        let v = document.getElementById(VIDEOID)
-        
-        v.addEventListener('ended', () => {
-            f++
-
-            this.setState({
-                path: this.path[f]
-            })
-            if (f === this.path.length) {
-                f = 1
-                this.setState({
-                    path: this.path[f],
-                    title: this.path[f]
-                })
-            }
-            console.log("playlist", f)
-        })
-    }
-
     render() {
         return ( 
             <div>
                 <Title t={this.state.title === undefined ? 'Welcome to Komo' : this.state.title}/>
                 <MiddleBtn />
-                <Video sauce={this.state.path === undefined ? null : this.state.path}id={VIDEOID}/>
+                <Video sauce={this.state.path === undefined ? null : this.state.path }id={VIDEOID}/>
                 <VideoControl t={this.state.time} e={this.state.end}/>
             </div>
         )
