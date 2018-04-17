@@ -26,8 +26,6 @@ export default class App extends React.Component {
         this.controls()
         this.shortcut()
 
-        // this.playlist()
-
         document.getElementById(VOLM_BAR).value = 0
     }
 
@@ -98,19 +96,22 @@ export default class App extends React.Component {
 
         ipcRenderer.on('open-file', (e, path) => {
             this.role()
-            
-            new Promise((resolve, reject) => {
-                if (path !== undefined) {
+
+            let waitForPush = new Promise((resolve, reject) => {
+                this.path.push(path)
+                this.setState({path})
+
+                if (this.path.length !== 0 && this.state.path !== undefined) {
                     resolve(path)
                 }
-            }).then(e => {
-                this.path.push(e)
-                this.setState({
-                    path: e
-                })
-            }).then(() => {
+            })
+
+            waitForPush.then(() => {
                 if (this.path.length !== 1) {
                     g = this.path.length - 1
+                    // After g set to the new value the playList function
+                    // must be called again, to update the value it have
+                    this.playList(v, g)
                 }
             })
             .catch(err => {return})
@@ -119,22 +120,24 @@ export default class App extends React.Component {
         ipcRenderer.on('kntl', (e, data) => {
             this.title(data)
         })
+    }
 
+    playList(v, g) {
         v.onended = () => {
+            this.role('pause')
             if (this.path.length - 1 === g) {
                 g = 0;
+                this.title(this.path[0])
                 this.setState({
                     path: this.path[0]
                 })
-                console.log(true, g)
             } else {
                 g++
+                this.title(this.path[g])
                 this.setState({
                     path: this.path[g]
                 })
-                console.log(false, g)
             }
-            console.log(g)
         }
     }
 
@@ -247,11 +250,6 @@ export default class App extends React.Component {
             this.setState({
                 end: t.join(':')
             })
-        }
-
-        // if video's end
-        if (v.currentTime === v.duration) {
-            this.role()
         }
     }
 

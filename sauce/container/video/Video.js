@@ -1,6 +1,5 @@
 import React from 'react'
 
-let g = 0
 const Video = ({sauce, id}) => {
     return (
         <div>
