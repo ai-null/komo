@@ -92,7 +92,6 @@ export default class App extends React.Component {
 
     getFilePath() {
         let v = document.getElementById(VIDEOID)
-        let g = 0
 
         ipcRenderer.on('open-file', (e, path) => {
             this.role()
@@ -108,10 +107,10 @@ export default class App extends React.Component {
 
             waitForPush.then(() => {
                 if (this.path.length !== 1) {
-                    g = this.path.length - 1
+                    num = this.path.length - 1
                     // After g set to the new value the playList function
                     // must be called again, to update the value it have
-                    this.playList(v, g)
+                    this.playList(v, num)
                 }
             })
             .catch(err => {return})
@@ -124,7 +123,6 @@ export default class App extends React.Component {
 
     playList(v, g) {
         v.onended = () => {
-            this.role('pause')
             if (this.path.length - 1 === g) {
                 g = 0;
                 this.title(this.path[0])
@@ -138,6 +136,9 @@ export default class App extends React.Component {
                     path: this.path[g]
                 })
             }
+            v.pause()
+            v.load()
+            v.play()
         }
     }
 
@@ -192,6 +193,29 @@ export default class App extends React.Component {
                         break;
                     case 'list':
                         console.log(this.path)
+                        break;
+                    case 'next':
+                        if (num === this.path.length - 1) {
+                            num=0
+                            this.title(this.path[num])
+                            this.setState({
+                                path: this.path[num]
+                            })
+
+                            v.pause()
+                            v.load()
+                            v.play()
+                        } else {
+                            num++
+                            this.title(this.path[num])
+                            this.setState({
+                                path: this.path[num]
+                            })
+
+                            v.pause()
+                            v.load()
+                            v.play()
+                        }
                         break;
                     case 'expand':
                         v.webkitRequestFullscreen();
