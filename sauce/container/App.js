@@ -110,7 +110,7 @@ export default class App extends React.Component {
                     num = this.path.length - 1
                     // After g set to the new value the playList function
                     // must be called again, to update the value it have
-                    this.playList(v, num)
+                    this.playList(v)
                 }
             })
             .catch(err => {return})
@@ -121,19 +121,19 @@ export default class App extends React.Component {
         })
     }
 
-    playList(v, g) {
+    playList(v) {
         v.onended = () => {
-            if (this.path.length - 1 === g) {
-                g = 0;
+            if (this.path.length - 1 === num) {
+                num = 0;
                 this.title(this.path[0])
                 this.setState({
                     path: this.path[0]
                 })
             } else {
-                g++
-                this.title(this.path[g])
+                num++
+                this.title(this.path[num])
                 this.setState({
-                    path: this.path[g]
+                    path: this.path[num]
                 })
             }
             v.pause()
@@ -197,9 +197,9 @@ export default class App extends React.Component {
                     case 'next':
                         if (num === this.path.length - 1) {
                             num=0
-                            this.title(this.path[num])
+                            this.title(this.path[0])
                             this.setState({
-                                path: this.path[num]
+                                path: this.path[0]
                             })
 
                             v.pause()
