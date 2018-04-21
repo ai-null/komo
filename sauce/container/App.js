@@ -175,7 +175,7 @@ export default class App extends React.Component {
 
         for (let e of btn) {
             e.addEventListener('click', () => {
-                switch (e.id) {
+                switch (e.className.split(' ')[1]) {
                     case 'play': // play and pause
                         v.src === "" ? console.log('nothing') : f.contains('fa-play') ? this.role('play') : this.role('pause')
                         break;
@@ -218,7 +218,7 @@ export default class App extends React.Component {
             })
 
             e.addEventListener('change', () => {
-                switch (e.id) {
+                switch (e.className.split(' ')[1]) {
                     case 'volume-range':
                         v.volume = e.value/100
 
