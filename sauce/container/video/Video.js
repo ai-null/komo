@@ -7,5 +7,4 @@ const Video = ({sauce, id}) => {
         </div>
     )
 }
-
 export default Video

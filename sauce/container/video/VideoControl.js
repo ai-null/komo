@@ -11,27 +11,27 @@ const VideoControl = ({t, e}) => {
             </div>
             <div>
                 <ul>
-                    <li className="btn previous" id="previous">
+                    <li className="btn previous">
                         <i className="fa fa-fast-backward"></i>
                     </li>
-                    <li className="btn backward" id="backward">
+                    <li className="btn backward">
                         <i className="fa fa-backward"></i>
                     </li>
                     <li className="btn play" id="play">
                         <i className="fa fa-play"></i>
                     </li>
-                    <li className="btn forward" id="forward">
+                    <li className="btn forward">
                         <i className="fa fa-forward"></i>
                     </li>
-                    <li className="btn next" id="next">
+                    <li className="btn next">
                         <i className="fa fa-fast-forward"></i>
                     </li>
-                    <li className="btn stop" id="stop">
+                    <li className="btn stop">
                         <i className="fa fa-stop"></i>
                     </li>
-                    <li className="volume">
+                    <li className="btn volume">
                         <i className="fa fa-volume-up"></i>
-                        <input type="range" className="btn" id="volume-range" />
+                        <input type="range" className="btn volume-range" id="volume-range" />
                     </li>
                     <li className="mnt" id="mnt">
                         {t === undefined ? '0:0:0' : t}/{e === undefined || e === 'NaN:NaN:NaN' ? '0:0:0' : e}
@@ -40,7 +40,7 @@ const VideoControl = ({t, e}) => {
                     <li className="btn expand" id="expand">
                         <i className="fa fa-expand"></i>
                     </li>
-                    <li className="btn list" id="list" title="Player list">
+                    <li className="btn list" id="list">
                         <i className="fa fa-list-alt"></i>
                     </li>
                 </ul>
@@ -48,5 +48,4 @@ const VideoControl = ({t, e}) => {
         </div>
     )
 }
-
 export default VideoControl

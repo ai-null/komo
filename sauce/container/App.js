@@ -3,6 +3,7 @@ import Title from './title/Title'
 import Video from './video/Video'
 import VideoControl from './video/VideoControl'
 import MiddleBtn from './video/MiddleBtn';
+import List from './list/List'
 
 let electron = window.require('electron')
 let {ipcRenderer} = electron || electron.remote
@@ -12,13 +13,13 @@ const VIDEOID = 'video-player'
 const PROG_BAR = 'progress-bar-hidden'
 const VOLM_BAR = 'volume-range'
 const MID_BTN = 'middleBtn'
+const PLAY_BTN = 'play'
 
 export default class App extends React.Component {
     constructor(...argument) {
         super(...argument)
         this.path = []
-        this.state = {
-        }
+        this.state = {}
     }
 
     componentDidMount() {
@@ -36,7 +37,7 @@ export default class App extends React.Component {
     role(arg) {
         let v = document.getElementById(VIDEOID)
         let g = document.getElementById(MID_BTN)
-        let f = document.getElementById('play').firstChild.classList
+        let f = document.getElementById(PLAY_BTN).firstChild.classList
 
 
         switch (arg) {
@@ -121,27 +122,11 @@ export default class App extends React.Component {
         })
     }
 
-    playList(v) {
-        v.onended = () => {
-            if (this.path.length - 1 === num) {
-                num = 0;
-                this.title(this.path[0])
-                this.setState({
-                    path: this.path[0]
-                })
-            } else {
-                num++
-                this.title(this.path[num])
-                this.setState({
-                    path: this.path[num]
-                })
-            }
-            v.pause()
-            v.load()
-            v.play()
-        }
-    }
-
+    /**
+     * 
+     * @param {String} data 
+     * File's path
+     */
     title(data) {
         let p = data.split('/');
         let title = p[p.length-1]
@@ -151,9 +136,16 @@ export default class App extends React.Component {
         })
     }
 
+    setChange() {
+        this.title(this.path[num])
+        this.setState({
+            path: this.path[num]
+        })
+    }
+
     shortcut() {
         let v = document.getElementById(VIDEOID)
-        let f = document.getElementById('play').firstChild.classList
+        let f = document.getElementById(PLAY_BTN).firstChild.classList
 
         window.addEventListener('keyup', (e) => {
             switch (e.keyCode) {
@@ -167,8 +159,7 @@ export default class App extends React.Component {
     controls() {
         let btn = document.getElementsByClassName('btn')
         let v = document.getElementById(VIDEOID)
-        let f = document.getElementById('play').firstChild.classList
-        
+        let f = document.getElementById(PLAY_BTN).firstChild.classList
 
         v.volume = 0
 
@@ -197,25 +188,28 @@ export default class App extends React.Component {
                     case 'next':
                         if (num === this.path.length - 1) {
                             num=0
-                            this.title(this.path[0])
-                            this.setState({
-                                path: this.path[0]
-                            })
-
-                            v.pause()
-                            v.load()
-                            v.play()
+                            this.setChange()
                         } else {
                             num++
-                            this.title(this.path[num])
-                            this.setState({
-                                path: this.path[num]
-                            })
-
-                            v.pause()
-                            v.load()
-                            v.play()
+                            this.setChange()
                         }
+
+                        v.pause()
+                        v.load()
+                        v.play()
+                        break;
+                    case 'previous':
+                        num--
+                        if (num === -1) {
+                            num = this.path.length - 1
+                            this.setChange()
+                        } else {
+                            this.setChange()
+                        }
+
+                        v.pause()
+                        v.load()
+                        v.play()
                         break;
                     case 'expand':
                         v.webkitRequestFullscreen();
@@ -227,6 +221,8 @@ export default class App extends React.Component {
                 switch (e.id) {
                     case 'volume-range':
                         v.volume = e.value/100
+
+                        console.log(e)
                         break;
                 }
             })
@@ -254,8 +250,8 @@ export default class App extends React.Component {
 
     /**
      * video's current time and duration
-     * @param {String} v update currentTime
-     * @param {null} r video's duration
+     * @param {String} v videoDom | update currentTime
+     * @param {null} r role | video's duration
      */
     videoTime(v, r = '') {
         let t = []
@@ -277,12 +273,28 @@ export default class App extends React.Component {
         }
     }
 
+    playList(v) {
+        v.onended = () => {
+            if (this.path.length - 1 === num) {
+                num = 0;
+                this.setChange()
+            } else {
+                num++
+                this.setChange()
+            }
+            v.pause()
+            v.load()
+            v.play()
+        }
+    }
+
     render() {
         return ( 
             <div>
                 <Title t={this.state.title === undefined ? 'Welcome to Komo' : this.state.title}/>
-                <MiddleBtn />
+                <MiddleBtn/>
                 <Video sauce={this.state.path === undefined ? null : this.state.path }id={VIDEOID}/>
+                <List l={this.path.length === 0 ? [] : this.path}/>
                 <VideoControl t={this.state.time} e={this.state.end}/>
             </div>
         )
