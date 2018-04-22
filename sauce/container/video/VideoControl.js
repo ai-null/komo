@@ -33,14 +33,14 @@ const VideoControl = ({t, e}) => {
                         <i className="fa fa-volume-up"></i>
                         <input type="range" className="btn volume-range" id="volume-range" />
                     </li>
-                    <li className="mnt" id="mnt">
+                    <li className="mnt">
                         {t === undefined ? '0:0:0' : t}/{e === undefined || e === 'NaN:NaN:NaN' ? '0:0:0' : e}
                     </li>
                     {/* Float Right */}
-                    <li className="btn expand" id="expand">
+                    <li className="btn expand">
                         <i className="fa fa-expand"></i>
                     </li>
-                    <li className="btn list" id="list">
+                    <li className="btn list">
                         <i className="fa fa-list-alt"></i>
                     </li>
                 </ul>
