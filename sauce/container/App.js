@@ -183,7 +183,18 @@ export default class App extends React.Component {
                         v.classList.length === 0 ? this.role('play') : this.role('pause')
                         break;
                     case 'list':
-                        console.log(this.path)
+                        let r = document.getElementById('list')
+
+                        if (r.classList.contains('hidden')) {
+                            r.classList.remove('hidden')
+                            e.firstChild.classList.remove('fa-list-alt')
+                            e.firstChild.classList.add('fa-times')
+                        }
+                        else {
+                            e.firstChild.classList.remove('fa-times')
+                            r.classList.add('hidden')
+                            e.firstChild.classList.add('fa-list-alt')
+                        }
                         break;
                     case 'next':
                         if (num === this.path.length - 1) {
@@ -294,7 +305,9 @@ export default class App extends React.Component {
                 <Title t={this.state.title === undefined ? 'Welcome to Komo' : this.state.title}/>
                 <MiddleBtn/>
                 <Video sauce={this.state.path === undefined ? null : this.state.path }id={VIDEOID}/>
-                <List l={this.path.length === 0 ? [] : this.path}/>
+                <div id="list" className="list-sidebar hidden">
+                    <List l={this.path.length === 0 ? [] : this.path}/>
+                </div>
                 <VideoControl t={this.state.time} e={this.state.end}/>
             </div>
         )

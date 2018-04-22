@@ -1,9 +1,8 @@
 import React from 'react'
 
 let g = (d) => {
-    if (d === '') {
-        return
-    } else {
+    if (d === '') return
+    else {
         let p = d.split('/');
         return p[p.length-1]
     }
@@ -11,11 +10,9 @@ let g = (d) => {
 
 const List = ({l}) => {
     return(
-        <div className="list-sidebar">
-            {Object.keys(l).map(e => {
-                return <div className="list-data" key={e}>{g(l[e])}</div>
-            })}
-        </div>
+        Object.keys(l).map(e => {
+            return <div className="list-data" key={e}><video src={l[e]}></video><span>{g(l[e])}</span></div>
+        })
     )
 }
 

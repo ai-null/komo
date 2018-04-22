@@ -5,7 +5,9 @@ async function background () {
     let v = await document.getElementById('video-player')
     let title = await document.getElementById('title')
     let vidControl = await document.getElementById('video-control')
+    let list = await document.getElementById('list')
     let btn = await document.getElementsByClassName('btn')
+
     let mouseenter = (e) => {
         e.addEventListener('mouseenter', () => {
             title.style.top = '0'
