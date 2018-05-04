@@ -26,8 +26,6 @@ export default class App extends React.Component {
         this.getFilePath()
         this.controls()
         this.shortcut()
-
-        document.getElementById(VOLM_BAR).value = 0
     }
 
     /**
@@ -101,7 +99,7 @@ export default class App extends React.Component {
                 this.path.push(path)
                 this.setState({path})
 
-                if (this.path.length !== 0 && this.state.path !== undefined) {
+                if (this.state.path !== undefined) {
                     resolve(path)
                 }
             })
@@ -136,11 +134,11 @@ export default class App extends React.Component {
         })
     }
 
-    setChange() {
-        this.title(this.path[num])
+    setChange(l=num) {
         this.setState({
-            path: this.path[num]
+            path: this.path[l]
         })
+        this.title(this.path[l])
     }
 
     shortcut() {
@@ -161,11 +159,13 @@ export default class App extends React.Component {
         let v = document.getElementById(VIDEOID)
         let f = document.getElementById(PLAY_BTN).firstChild.classList
 
+        // Development mode 😸
+        document.getElementById(VOLM_BAR).value = 0
         v.volume = 0
 
         // Video Controls
         v.addEventListener('timeupdate', () => {
-            document.getElementById('progress-bar').style.width = String(Math.round((100/v.duration)*v.currentTime)) + "%"
+            document.getElementById('progress-bar').style.width = `${String(Math.round((100/v.duration)*v.currentTime))}%`
 
             this.videoTime(v, 'play')
             this.videoTime(v)
@@ -183,17 +183,18 @@ export default class App extends React.Component {
                         v.classList.length === 0 ? this.role('play') : this.role('pause')
                         break;
                     case 'list':
-                        let r = document.getElementById('list')
+                        let l = document.getElementById('list')
+                        let g = e.firstChild.classList
 
-                        if (r.classList.contains('hidden')) {
-                            r.classList.remove('hidden')
-                            e.firstChild.classList.remove('fa-list-alt')
-                            e.firstChild.classList.add('fa-times')
+                        if (l.classList.contains('hidden')) {
+                            l.classList.remove('hidden')
+                            g.remove('fa-list-alt')
+                            g.add('fa-times')
                         }
                         else {
-                            e.firstChild.classList.remove('fa-times')
-                            r.classList.add('hidden')
-                            e.firstChild.classList.add('fa-list-alt')
+                            g.remove('fa-times')
+                            l.classList.add('hidden')
+                            g.add('fa-list-alt')
                         }
                         break;
                     case 'next':
@@ -232,8 +233,6 @@ export default class App extends React.Component {
                 switch (e.className.split(' ')[1]) {
                     case 'volume-range':
                         v.volume = e.value/100
-
-                        console.log(e)
                         break;
                 }
             })
@@ -302,11 +301,11 @@ export default class App extends React.Component {
     render() {
         return ( 
             <div>
-                <Title t={this.state.title === undefined ? 'Welcome to Komo' : this.state.title}/>
+                <Title t={this.state.title === undefined ? 'Welcome to Komo':this.state.title}/>
                 <MiddleBtn/>
-                <Video sauce={this.state.path === undefined ? null : this.state.path }id={VIDEOID}/>
+                <Video sauce={this.state.path === undefined ? null:this.state.path}id={VIDEOID}/>
                 <div id="list" className="list-sidebar hidden">
-                    <List l={this.path.length === 0 ? [] : this.path}/>
+                    <List l={this.path.length === 0 ? [] : this.path} c={this.setChange} />
                 </div>
                 <VideoControl t={this.state.time} e={this.state.end}/>
             </div>
