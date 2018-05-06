@@ -14,14 +14,8 @@ const VideoControl = ({t, e}) => {
                     <li className="btn previous">
                         <i className="fa fa-fast-backward"></i>
                     </li>
-                    <li className="btn backward">
-                        <i className="fa fa-backward"></i>
-                    </li>
                     <li className="btn play" id="play">
                         <i className="fa fa-play"></i>
-                    </li>
-                    <li className="btn forward">
-                        <i className="fa fa-forward"></i>
                     </li>
                     <li className="btn next">
                         <i className="fa fa-fast-forward"></i>

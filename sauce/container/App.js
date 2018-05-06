@@ -134,11 +134,11 @@ export default class App extends React.Component {
         })
     }
 
-    setChange(l=num) {
+    setChange() {
         this.setState({
-            path: this.path[l]
+            path: this.path[num]
         })
-        this.title(this.path[l])
+        this.title(this.path[num])
     }
 
     shortcut() {
@@ -198,10 +198,14 @@ export default class App extends React.Component {
                         }
                         break;
                     case 'next':
+                        console.log('1', 'path', this.path.length -1)
+                        console.log('1', 'num', num)
                         if (num === this.path.length - 1) {
                             num=0
                             this.setChange()
                         } else {
+                            console.log('path', this.path.length -1)
+                            console.log('num', num)
                             num++
                             this.setChange()
                         }
@@ -298,6 +302,27 @@ export default class App extends React.Component {
         }
     }
 
+    list() {
+        if (this.path.length !== 0) {
+            try {
+                return <List l={this.path} c={(g) => {
+                    if (num === g) {
+                        return
+                    } else {
+                        num=g
+                        this.setChange()
+                    }
+                    let v = document.getElementById(VIDEOID)
+                    v.pause()
+                    v.load()
+                    v.play()
+                }} />
+            } catch (err) {
+                return <div className="list-data">something error : {err}</div>
+            }
+        }
+    }
+
     render() {
         return ( 
             <div>
@@ -305,7 +330,7 @@ export default class App extends React.Component {
                 <MiddleBtn/>
                 <Video sauce={this.state.path === undefined ? null:this.state.path}id={VIDEOID}/>
                 <div id="list" className="list-sidebar hidden">
-                    <List l={this.path.length === 0 ? [] : this.path} c={this.setChange} />
+                    {this.list()}
                 </div>
                 <VideoControl t={this.state.time} e={this.state.end}/>
             </div>

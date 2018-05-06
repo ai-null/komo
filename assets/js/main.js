@@ -39,7 +39,7 @@ async function background () {
             title.style.top = '-7rem'
             vidControl.style.bottom = '-5rem'
         }
-
+        mouseenter(list)
         mouseenter(vidControl)
         mouseenter(title)
     })

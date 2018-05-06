@@ -1,29 +1,24 @@
 import React from 'react'
 
-export default class List extends React.Component {
-    constructor(...args) {
-        super(...args)
-        this.state = {}
-    }
-
-    g(d) {
-        if (d === '') return
-        else {
-            let p = d.split('/');
-            return p[p.length-1]
-        }
-    }
-
-    render() {
-        return (
-            Object.keys(this.props.l).map(e => {
-                return (
-                    <div className="list-data" onClick={()=>{console.log(e)}} key={e}>
-                        <video src={this.props.l[e]}></video>
-                        <span>{this.g(this.props.l[e])}</span>
-                    </div>
-                )
-            })
-        )
+function g(d) {
+    if (d === '') return
+    else {
+        let p = d.split('/');
+        return p[p.length-1]
     }
 }
+
+const List = ({l, c}) => {
+    return (
+        Object.keys(l).map(e => {
+            return (
+                <div className="list-data" onClick={() => {c(parseInt(e))}} key={e}>
+                    <video src={l[e]}></video>
+                    <span>{g(l[e])}</span>
+                </div>
+            )
+        })
+    )
+}
+
+export default List
