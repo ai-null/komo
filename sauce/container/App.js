@@ -198,14 +198,10 @@ export default class App extends React.Component {
                         }
                         break;
                     case 'next':
-                        console.log('1', 'path', this.path.length -1)
-                        console.log('1', 'num', num)
                         if (num === this.path.length - 1) {
                             num=0
                             this.setChange()
                         } else {
-                            console.log('path', this.path.length -1)
-                            console.log('num', num)
                             num++
                             this.setChange()
                         }
@@ -246,18 +242,16 @@ export default class App extends React.Component {
     seekbar(v) {
         let g = false
         let pb = document.getElementById(PROG_BAR)
-        
+        let f = (e) => v.currentTime = ((e.offsetX)/e.target.offsetWidth)*v.duration
+
+
         if (v.src !== "" || v.src !== undefined) {
             pb.addEventListener('mousemove', (e) => {
-                if (g) {
-                    v.currentTime = ((e.offsetX)/e.target.offsetWidth)*v.duration
-                }
+                if (g) f(e)
                 
                 window.addEventListener('mouseup', () => g = false)
                 pb.addEventListener('mousedown', () => g = true)
-                pb.addEventListener('click', () => {
-                    v.currentTime = ((e.offsetX)/e.target.offsetWidth)*v.duration
-                })
+                pb.addEventListener('click', () => f(e))
             })
         }
     }
@@ -306,16 +300,22 @@ export default class App extends React.Component {
         if (this.path.length !== 0) {
             try {
                 return <List l={this.path} c={(g) => {
-                    if (num === g) {
-                        return
-                    } else {
-                        num=g
-                        this.setChange()
-                    }
-                    let v = document.getElementById(VIDEOID)
-                    v.pause()
-                    v.load()
-                    v.play()
+                    let f = new Promise((resolve, reject) => {
+                        if (num === g) {
+                            return
+                        } else {
+                            num=g
+                            this.setChange()
+                        }
+                        let v = document.getElementById(VIDEOID)
+                        resolve(v)
+                    })
+
+                    f.then(e => {
+                        e.pause()
+                        e.load()
+                        e.play()
+                    })
                 }} />
             } catch (err) {
                 return <div className="list-data">something error : {err}</div>
