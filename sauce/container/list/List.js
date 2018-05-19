@@ -1,13 +1,6 @@
 import React from 'react'
 
-function g(d) {
-    if (d === '') return
-    else {
-        let p = d.split('/');
-        return p[p.length-1]
-    }
-}
-
+let g = (d) => d!=='' ? d.split('/')[d.split('/').length-1] : ''
 const List = ({l, c}) => {
     return (
         Object.keys(l).map(e => {
