@@ -2,7 +2,11 @@
 
 Komo is desktop video player use react and electron.
 
-<img src="https://raw.githubusercontent.com/MAinulYaqin/komo/master/screenshots/Screenshot%20from%202018-04-11%2022-06-49.png" width="600"/>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ai-null/komo/master/screenshots/Screenshot%20from%202018-05-07%2014-24-13.png" width="49%"/>
+  <img src="https://github.com/ai-null/komo/blob/master/screenshots/Screenshot%20from%202018-05-07%2014-25-15.png" width="49%"/>
+</p>
+
 
 #### Usage
 * Clone this project then open terminal or cmd inside the folder
